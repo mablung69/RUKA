@@ -30,13 +30,11 @@ class Controller:
                 intensities = []
                 for device in nearby_devices:
                     intensity = bluetooth_controller.get_rssi(device[0])
-                    if not intensity:
-                        intensity = -10000
                     intensities.append(intensity)
                 print('Intensities: {}'.format(intensities))
 
                 self.closest_device = nearby_devices[intensities.index(max(
-                    intensities))]
+                    filter(lambda x: bool(x), intensities)))]
                 print('The closest device is: {}'.format(self.closest_device))
             else:
                 print('Found no devices nearby.')
