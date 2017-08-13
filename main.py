@@ -14,6 +14,5 @@ def discover_nearby_devices():
 
 if __name__ == '__main__':
     discoverer_thread = threading.Thread(name='Discoverer',
-                                         target=discover_nearby_devices,
-                                         daemon=True)
+                                         target=discover_nearby_devices)
     discoverer_thread.start()
