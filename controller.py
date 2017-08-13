@@ -35,8 +35,6 @@ class Controller:
                         intensity = bluetooth_controller.get_rssi(device[0])
                         attempts += 1
                     intensities.append(intensity)
-                print('Intensities: {}'.format(zip(nearby_devices,
-                                                   intensities)))
                 if filter(lambda x: bool(x), intensities):
                     self.closest_device = nearby_devices[intensities.index(max(
                         filter(lambda x: bool(x), intensities)))]
@@ -55,6 +53,7 @@ class Controller:
                 while not intensity and attempts < 3:
                     intensity = bluetooth_controller.get_rssi(
                         self.closest_device[0])
+                    print('Intensity: {}'.format(intensity))
                     if not intensity:
                         attempts += 1
                         print('Device not found. Retrying...')
