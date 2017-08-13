@@ -36,9 +36,9 @@ class Controller:
                         attempts += 1
                     intensities.append(intensity)
                 print('Intensities: {}'.format(intensities))
-                if filter(lambda x: bool(x), intensities):
+                if list(filter(lambda x: bool(x), intensities)):
                     self.closest_device = nearby_devices[intensities.index(max(
-                        filter(lambda x: bool(x), intensities)))]
+                        list(filter(lambda x: bool(x), intensities))))]
                     print('The closest device is: {}'.format(
                         self.closest_device))
                 else:
