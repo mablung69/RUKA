@@ -57,3 +57,4 @@ class Controller:
             else:
                 print('There is no device stored.')
                 time.sleep(5)
+            time.sleep(1)
