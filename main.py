@@ -34,8 +34,4 @@ class Controller:
                 print('Found no devices nearby.')
 
 if __name__ == '__main__':
-    try:
-        controller = Controller()
-    except KeyboardInterrupt:
-        GPIOController.cleanup()
-        sys.exit()
+    controller = Controller()
