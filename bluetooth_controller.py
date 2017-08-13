@@ -18,8 +18,3 @@ def get_rssi(address):
     '''.format(module_, function_))
     channel.send([address])
     return channel.receive()
-
-
-if __name__ == '__main__':
-    address = '7C:01:91:4D:FA:16'
-    print(get_rssi(address))
