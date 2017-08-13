@@ -33,7 +33,6 @@ class Controller:
                     attempts = 0
                     while intensity is None and attempts < 3:
                         intensity = bluetooth_controller.get_rssi(device[0])
-                        print('Intensity: {}'.format(intensity))
                         attempts += 1
                     intensities.append(intensity)
                 print('Intensities: {}'.format(intensities))
@@ -52,7 +51,7 @@ class Controller:
             if self.closest_device:
                 intensity = None
                 attempts = 0
-                while intensity is None and attempts < 3:
+                while intensity is None and attempts < 2:
                     intensity = bluetooth_controller.get_rssi(
                         self.closest_device[0])
                     print('Intensity: {}'.format(intensity))
