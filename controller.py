@@ -67,7 +67,6 @@ class Controller:
                 else:
                     GPIOController.set_led(True)
                     print('Above threshold.')
-            else:
-                print('There is no device stored.')
                 time.sleep(5)
-            time.sleep(1)
+            else:
+                time.sleep(1)
