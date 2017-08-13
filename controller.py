@@ -33,12 +33,13 @@ class Controller:
                     attempts = 0
                     while intensity is None and attempts < 3:
                         intensity = bluetooth_controller.get_rssi(device[0])
+                        print('Intensity: {}'.format(intensity))
                         attempts += 1
                     intensities.append(intensity)
                 print('Intensities: {}'.format(intensities))
-                if list(filter(lambda x: bool(x), intensities)):
+                if list(filter(lambda x: x is not None, intensities)):
                     self.closest_device = nearby_devices[intensities.index(max(
-                        list(filter(lambda x: bool(x), intensities))))]
+                        list(filter(lambda x: x is not None, intensities))))]
                     print('The closest device is: {}'.format(
                         self.closest_device))
                 else:
