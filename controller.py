@@ -51,11 +51,11 @@ class Controller:
             if self.closest_device:
                 intensity = None
                 attempts = 0
-                while not intensity and attempts < 3:
+                while intensity is None and attempts < 3:
                     intensity = bluetooth_controller.get_rssi(
                         self.closest_device[0])
                     print('Intensity: {}'.format(intensity))
-                    if not intensity:
+                    if intensity is None:
                         attempts += 1
                         print('Device not found. Retrying...')
                 if intensity is None:
