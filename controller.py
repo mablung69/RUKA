@@ -60,7 +60,6 @@ class Controller:
                 if not intensity:
                     GPIOController.set_led(False)
                     print('Device not found. Turning LED off.')
-                    time.sleep(5)
                 elif intensity < self.threshold:
                     GPIOController.set_led(False)
                     print('Below threshold.')
