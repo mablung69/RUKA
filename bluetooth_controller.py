@@ -3,7 +3,7 @@ import execnet
 
 
 def get_nearby_devices(names=False):
-    return bluetooth.discover_devices(names)
+    return bluetooth.discover_devices(lookup_names=names)
 
 
 def get_rssi(address):
