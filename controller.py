@@ -62,7 +62,7 @@ class Controller:
                             print('Device not found. Retrying...')
                 if intensity is None:
                     GPIOController.set_led(False)
-                    print('Device not found. Turning LED off.')
+                    print('Device not found.')
                 elif intensity < self.threshold:
                     GPIOController.set_led(False)
                     print('Below threshold.')
