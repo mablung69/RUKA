@@ -1,12 +1,13 @@
 from gpio_controller import GPIOController
 import bluetooth_controller
 import threading
-
-gpio = GPIOController()
+import sys
 
 
 class Controller:
     def __init__(self):
+        GPIOController()
+        
         self.closest_device = None
 
         discoverer_thread = threading.Thread(name='Discoverer',
@@ -15,7 +16,7 @@ class Controller:
 
     def seek_closest_device(self):
         while True:
-            gpio.block_until_press()
+            GPIOController.block_until_press()
             print('Looking for devices...')
             nearby_devices = bluetooth_controller.get_nearby_devices(True)
 
@@ -33,4 +34,8 @@ class Controller:
                 print('Found no devices nearby.')
 
 if __name__ == '__main__':
-    controller = Controller()
+    try:
+        controller = Controller()
+    except KeyboardInterrupt:
+        GPIOController.cleanup()
+        sys.exit()
