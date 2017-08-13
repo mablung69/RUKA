@@ -7,7 +7,7 @@ import sys
 class Controller:
     def __init__(self):
         GPIOController()
-        
+
         self.closest_device = None
 
         discoverer_thread = threading.Thread(name='Discoverer',
@@ -27,8 +27,8 @@ class Controller:
                     distances.append(bluetooth_controller.get_rssi(device[0]))
                 print('Distances: {}'.format(distances))
 
-                self.closest_device = nearby_devices[nearby_devices.index(
-                    max(distances))]
+                self.closest_device = nearby_devices[distances.index(max(
+                    distances))]
                 print('The closest device is: {}'.format(self.closest_device))
             else:
                 print('Found no devices nearby.')
