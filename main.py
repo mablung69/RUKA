@@ -29,8 +29,11 @@ class Controller:
                 print('Found these devices: {}'.format(nearby_devices))
                 intensities = []
                 for device in nearby_devices:
-                    intensities.append(bluetooth_controller.get_rssi(device[0]))
-                print('Distances: {}'.format(intensities))
+                    intensity = bluetooth_controller.get_rssi(device[0])
+                    if not intensity:
+                        intensity = -10000
+                    intensities.append(intensity)
+                print('Intensities: {}'.format(intensities))
 
                 self.closest_device = nearby_devices[intensities.index(max(
                     intensities))]
@@ -43,7 +46,9 @@ class Controller:
             if self.closest_device:
                 intensity = bluetooth_controller.get_rssi(
                     self.closest_device[0])
-                if intensity < self.threshold:
+                if not intensity:
+                    print('Device not found.')
+                elif intensity < self.threshold:
                     print('Below threshold.')
                 else:
                     print('Above threshold.')
