@@ -42,13 +42,17 @@ class Controller:
     def check_closest_device_intensity(self):
         while True:
             if self.closest_device:
-                intensity = bluetooth_controller.get_rssi(
-                    self.closest_device[0])
+                intensity = None
+                attempts = 0
+                while not intensity and attempts < 3:
+                    intensity = bluetooth_controller.get_rssi(
+                        self.closest_device[0])
+                    attempts += 1
                 if not intensity:
                     GPIOController.set_led(False)
                     print('Device not found.')
                     time.sleep(5)
-                elif intensity < self.threshold:
+                if intensity < self.threshold:
                     GPIOController.set_led(False)
                     print('Below threshold.')
                 else:
