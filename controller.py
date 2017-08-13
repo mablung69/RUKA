@@ -31,7 +31,7 @@ class Controller:
                 for device in nearby_devices:
                     intensity = None
                     attempts = 0
-                    while not intensity and attempts < 3:
+                    while intensity is None and attempts < 3:
                         intensity = bluetooth_controller.get_rssi(device[0])
                         attempts += 1
                     intensities.append(intensity)
