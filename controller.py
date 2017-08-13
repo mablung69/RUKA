@@ -55,3 +55,4 @@ class Controller:
                     GPIOController.set_led(True)
             else:
                 print('There is no device stored.')
+                time.sleep(5)
