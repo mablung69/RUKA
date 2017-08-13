@@ -25,7 +25,7 @@ class Controller:
             print('Looking for devices...')
             nearby_devices = bluetooth_controller.get_nearby_devices(True)
 
-            if nearby_devices:
+            if filter(lambda x: bool(x), nearby_devices):
                 print('Found these devices: {}'.format(nearby_devices))
                 intensities = []
                 for device in nearby_devices:
