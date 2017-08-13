@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 
 class GPIOController:
     button_pin = 17
+    led_pin = 22
     initialized = False
 
     def __init__(self):
@@ -11,6 +12,7 @@ class GPIOController:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(GPIOController.button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(GPIOController.led_pin, GPIO.OUT)
         GPIOController.initialized = True
 
     @staticmethod
@@ -26,3 +28,7 @@ class GPIOController:
             state = GPIO.input(GPIOController.button_pin)
             if not state:
                 return
+
+    @staticmethod
+    def set_led(state):
+        GPIO.output(GPIOController.led_pin, state)

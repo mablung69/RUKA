@@ -46,10 +46,13 @@ class Controller:
                     self.closest_device[0])
                 if not intensity:
                     print('Device not found.')
+                    GPIOController.set_led(False)
                 elif intensity < self.threshold:
                     print('Below threshold.')
+                    GPIOController.set_led(False)
                 else:
                     print('Above threshold.')
+                    GPIOController.set_led(True)
             else:
                 print('There is no device stored.')
             time.sleep(15)
