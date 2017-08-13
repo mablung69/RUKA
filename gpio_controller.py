@@ -14,11 +14,4 @@ class GPIOController:
         while True:
             state = GPIO.input(GPIOController.button_pin)
             if not state:
-                print('Button pressed')
                 return
-
-if __name__ == '__main__':
-    gpio = GPIOController()
-    print('1')
-    gpio.block_until_press()
-    print('2')
