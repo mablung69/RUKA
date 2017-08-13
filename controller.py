@@ -5,10 +5,11 @@ import time
 
 
 class Controller:
-    def __init__(self, threshold):
+    def __init__(self, threshold, attempts):
         GPIOController()
 
         self.threshold = threshold
+        self.attempts = attempts
         self.closest_device = None
 
         discoverer_thread = threading.Thread(name='Discoverer',
@@ -31,7 +32,7 @@ class Controller:
                 for device in nearby_devices:
                     intensity = None
                     attempts = 0
-                    while intensity is None and attempts < 3:
+                    while intensity is None and attempts < self.attempts:
                         intensity = bluetooth_controller.get_rssi(device[0])
                         attempts += 1
                     intensities.append(intensity)
@@ -51,13 +52,14 @@ class Controller:
             if self.closest_device:
                 intensity = None
                 attempts = 0
-                while intensity is None and attempts < 2:
+                while intensity is None and attempts < self.attempts:
                     intensity = bluetooth_controller.get_rssi(
                         self.closest_device[0])
                     print('Intensity: {}'.format(intensity))
                     if intensity is None:
                         attempts += 1
-                        print('Device not found. Retrying...')
+                        if attempts < self.attempts:
+                            print('Device not found. Retrying...')
                 if intensity is None:
                     GPIOController.set_led(False)
                     print('Device not found. Turning LED off.')
