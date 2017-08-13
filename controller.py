@@ -25,17 +25,25 @@ class Controller:
             print('Looking for devices...')
             nearby_devices = bluetooth_controller.get_nearby_devices(True)
 
-            if filter(lambda x: bool(x), nearby_devices):
+            if nearby_devices:
                 print('Found these devices: {}'.format(nearby_devices))
                 intensities = []
                 for device in nearby_devices:
-                    intensity = bluetooth_controller.get_rssi(device[0])
+                    intensity = None
+                    attempts = 0
+                    while not intensity and attempts < 3:
+                        intensity = bluetooth_controller.get_rssi(device[0])
+                        attempts += 1
                     intensities.append(intensity)
-                print('Intensities: {}'.format(intensities))
-
-                self.closest_device = nearby_devices[intensities.index(max(
-                    filter(lambda x: bool(x), intensities)))]
-                print('The closest device is: {}'.format(self.closest_device))
+                print('Intensities: {}'.format(zip(nearby_devices,
+                                                   intensities)))
+                if filter(lambda x: bool(x), intensities):
+                    self.closest_device = nearby_devices[intensities.index(max(
+                        filter(lambda x: bool(x), intensities)))]
+                    print('The closest device is: {}'.format(
+                        self.closest_device))
+                else:
+                    print('The devices were not found.')
             else:
                 print('Found no devices nearby.')
 
