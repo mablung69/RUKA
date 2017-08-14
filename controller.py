@@ -9,6 +9,10 @@ class Controller:
         GPIOController()
 
         self.threshold = threshold
+        if attempts < 1:
+            raise ValueError('"Attempts" should be a positive integer.')
+        elif not isinstance(attempts, int):
+            raise TypeError('"Attempts" should be a positive integer.')
         self.attempts = attempts
         self.closest_device = None
 
