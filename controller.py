@@ -24,10 +24,12 @@ class Controller:
         self.closest_device = None
 
         discoverer_thread = threading.Thread(name='Discoverer',
-                                             target=self.seek_closest_device)
+                                             target=self.seek_closest_device,
+                                             daemon=True)
         intensity_checker_thread = threading.Thread(
             name='Intensity checker',
-            target=self.check_closest_device_intensity)
+            target=self.check_closest_device_intensity,
+            daemon=True)
         exiter_thread = threading.Thread(name='Exiter', target=self.exiter)
         discoverer_thread.start()
         intensity_checker_thread.start()
