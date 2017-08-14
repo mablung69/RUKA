@@ -5,16 +5,16 @@ import time
 
 
 class Controller:
-    def __init__(self, threshold, attempts, checker_delay):
+    def __init__(self, intensity_threshold, connection_attempts, checker_delay):
         GPIOController()
 
-        self.threshold = threshold
+        self.intensity_threshold = intensity_threshold
 
-        if attempts < 1:
+        if connection_attempts < 1:
             raise ValueError('"attempts" should be a positive integer.')
-        elif not isinstance(attempts, int):
+        elif not isinstance(connection_attempts, int):
             raise TypeError('"attempts" should be a positive integer.')
-        self.attempts = attempts
+        self.connection_attempts = connection_attempts
 
         if checker_delay < 0:
             raise ValueError('"checker_delay" can\'t be a negative number.')
@@ -42,7 +42,8 @@ class Controller:
                 for device in nearby_devices:
                     intensity = None
                     attempts = 0
-                    while intensity is None and attempts < self.attempts:
+                    while (intensity is None and attempts <
+                           self.connection_attempts):
                         intensity = bluetooth_controller.get_rssi(device[0])
                         attempts += 1
                     intensities.append(intensity)
@@ -62,18 +63,18 @@ class Controller:
             if self.closest_device:
                 intensity = None
                 attempts = 0
-                while intensity is None and attempts < self.attempts:
+                while intensity is None and attempts < self.connection_attempts:
                     intensity = bluetooth_controller.get_rssi(
                         self.closest_device[0])
                     print('Intensity: {}'.format(intensity))
                     if intensity is None:
                         attempts += 1
-                        if attempts < self.attempts:
+                        if attempts < self.connection_attempts:
                             print('Device not found. Retrying...')
                 if intensity is None:
                     GPIOController.set_led(False)
                     print('Device not found.')
-                elif intensity < self.threshold:
+                elif intensity < self.intensity_threshold:
                     GPIOController.set_led(False)
                     print('Below threshold.')
                 else:

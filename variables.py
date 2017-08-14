@@ -1,3 +1,3 @@
-threshold = -4
-attempts = 2
+intensity_threshold = -4
+connection_attempts = 2
 checker_delay = 5
