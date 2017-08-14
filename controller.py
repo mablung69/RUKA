@@ -5,15 +5,21 @@ import time
 
 
 class Controller:
-    def __init__(self, threshold, attempts):
+    def __init__(self, threshold, attempts, checker_delay):
         GPIOController()
 
         self.threshold = threshold
+
         if attempts < 1:
-            raise ValueError('"Attempts" should be a positive integer.')
+            raise ValueError('"attempts" should be a positive integer.')
         elif not isinstance(attempts, int):
-            raise TypeError('"Attempts" should be a positive integer.')
+            raise TypeError('"attempts" should be a positive integer.')
         self.attempts = attempts
+
+        if checker_delay < 0:
+            raise ValueError('"checker_delay" can\'t be a negative number.')
+        self.checker_delay = checker_delay
+
         self.closest_device = None
 
         discoverer_thread = threading.Thread(name='Discoverer',
@@ -73,6 +79,6 @@ class Controller:
                 else:
                     GPIOController.set_led(True)
                     print('Above threshold.')
-                time.sleep(5)
+                time.sleep(self.checker_delay)
             else:
-                time.sleep(1)
+                time.sleep(0.5)
