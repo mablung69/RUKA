@@ -2,6 +2,7 @@ from gpio_controller import GPIOController
 import bluetooth_controller
 import threading
 import time
+import sys
 
 
 class Controller:
@@ -27,8 +28,10 @@ class Controller:
         intensity_checker_thread = threading.Thread(
             name='Intensity checker',
             target=self.check_closest_device_intensity)
+        exiter_thread = threading.Thread(name='Exiter', target=self.exiter)
         discoverer_thread.start()
         intensity_checker_thread.start()
+        exiter_thread.start()
 
     def seek_closest_device(self):
         while True:
@@ -83,3 +86,12 @@ class Controller:
                 time.sleep(self.checker_delay)
             else:
                 time.sleep(0.5)
+
+    @staticmethod
+    def exiter():
+        while True:
+            input_text = input()
+            if input_text == 'exit':
+                GPIOController.cleanup()
+                print('Good bye!')
+                sys.exit()
