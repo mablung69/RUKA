@@ -18,7 +18,6 @@ class GPIOController:
 
     @staticmethod
     def cleanup():
-        print('Cleaning GPIO pins.')
         GPIO.cleanup()
 
     @staticmethod
