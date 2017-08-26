@@ -12,7 +12,8 @@ class CurrentSensor:
         self.samples = samples
         self.decimal_places = decimal_places
 
-    def get_amps(self):
+    @property
+    def amps(self):
         count = 0
         max_value = 0
 
@@ -30,5 +31,5 @@ class CurrentSensor:
 if __name__ == '__main__':
     current_sensor = CurrentSensor()
     while True:
-        print(current_sensor.get_amps())
+        print(current_sensor.amps)
         time.sleep(3)
