@@ -19,6 +19,7 @@ class CurrentSensor:
         while count < self.samples:
             max_value = max(abs(self.adc.read_adc(self.pin, gain=self.gain)),
                             max_value)
+            count += 1
 
         i_rms = round(max_value / (2047 * 30), self.decimal_places)
         amps = round(i_rms / math.sqrt(2), self.decimal_places)
