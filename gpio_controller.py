@@ -1,10 +1,11 @@
 import RPi.GPIO as GPIO
+import gpio_variables as v
 
 
 class GPIOController:
-    button_pin = 17
-    led_pin = 27
-    switch_pin = 22
+    button_pin = v.button_pin
+    led_pin = v.led_pin
+    switch_pin = v.switch_pin
 
     initialized = False
 
