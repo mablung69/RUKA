@@ -22,7 +22,7 @@ class Logger:
         if not os.path.isfile(self.file_name):
             with open(self.file_name, 'w') as file:
                 header = ['Año', 'Mes', 'Día', 'Hora', 'Minuto', 'Segundo',
-                          'Amperaje']
+                          'Amperaje [mA]']
                 file.write(','.join(header) + '\n')
 
     def continously_log(self):
@@ -39,5 +39,5 @@ class Logger:
                         datetime.datetime.now().hour,
                         datetime.datetime.now().minute,
                         datetime.datetime.now().second,
-                        self.current_sensor.amps])
+                        self.current_sensor.miliamps])
             file.write(','.join(data) + '\n')

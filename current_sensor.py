@@ -13,7 +13,7 @@ class CurrentSensor:
         self.decimal_places = decimal_places
 
     @property
-    def amps(self):
+    def miliamps(self):
         count = 0
         max_value = 0
 
@@ -22,14 +22,8 @@ class CurrentSensor:
                             max_value)
             count += 1
 
-        i_rms = round(max_value / (2047 * 30), self.decimal_places)
-        amps = round(i_rms / math.sqrt(2), self.decimal_places)
+        i_rms = max_value / (2047 * 30)
+        amps = i_rms / math.sqrt(2)
+        miliamps = round(amps * 1000, self.decimal_places)
 
-        return amps
-
-
-if __name__ == '__main__':
-    current_sensor = CurrentSensor()
-    while True:
-        print(current_sensor.amps)
-        time.sleep(3)
+        return miliamps
