@@ -4,9 +4,9 @@ import time
 
 
 class CurrentSensor:
-    def __init__(self, pin=0, gain=4, samples=200, decimal_places=2):
+    def __init__(self, sensor_pin=0, gain=4, samples=200, decimal_places=2):
         self.adc = Adafruit_ADS1x15.ADS1015()
-        self.pin = pin
+        self.sensor_pin = sensor_pin
 
         self.gain = gain
         self.samples = samples
@@ -18,7 +18,8 @@ class CurrentSensor:
         max_value = 0
 
         while count < self.samples:
-            max_value = max(abs(self.adc.read_adc(self.pin, gain=self.gain)),
+            max_value = max(abs(self.adc.read_adc(self.sensor_pin,
+                                                  gain=self.gain)),
                             max_value)
             count += 1
 

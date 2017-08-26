@@ -6,11 +6,11 @@ from current_sensor import CurrentSensor
 
 
 class Logger:
-    def __init__(self, logging_delay, file_name, pin):
+    def __init__(self, logging_delay, file_name, sensor_pin):
         self.logging_delay = logging_delay
         self.file_name = file_name
 
-        self.current_sensor = CurrentSensor(pin=pin)
+        self.current_sensor = CurrentSensor(sensor_pin=sensor_pin)
 
         self.check_file_exists()
 
