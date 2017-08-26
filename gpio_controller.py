@@ -16,7 +16,7 @@ class GPIOController:
         GPIO.setup(GPIOController.button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(GPIOController.switch_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(GPIOController.led_pin, GPIO.OUT)
-        GPIO.output(GPIOController.led_pin, True)
+        GPIO.output(GPIOController.led_pin, False)
         GPIOController.initialized = True
 
     @staticmethod

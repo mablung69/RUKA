@@ -66,7 +66,7 @@ class Controller:
     def check_closest_device_intensity(self):
         while True:
             if GPIOController.get_switch():
-                GPIOController.set_led(True)
+                GPIOController.set_led(False)
                 print('Switch override.')
                 time.sleep(self.checker_delay)
             elif self.closest_device:
@@ -81,13 +81,13 @@ class Controller:
                         if attempts < self.connection_attempts:
                             print('Device not found. Retrying...')
                 if intensity is None:
-                    GPIOController.set_led(False)
+                    GPIOController.set_led(True)
                     print('Device not found.')
                 elif intensity < self.intensity_threshold:
-                    GPIOController.set_led(False)
+                    GPIOController.set_led(True)
                     print('Below threshold.')
                 else:
-                    GPIOController.set_led(True)
+                    GPIOController.set_led(False)
                     print('Above threshold.')
                 time.sleep(self.checker_delay)
             else:
