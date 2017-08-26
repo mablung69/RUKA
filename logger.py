@@ -15,7 +15,8 @@ class Logger:
         self.check_file_exists()
 
         logger_thread = threading.Thread(name='Logger',
-                                         target=self.continously_log)
+                                         target=self.continously_log,
+                                         daemon=True)
         logger_thread.start()
 
     def check_file_exists(self):
