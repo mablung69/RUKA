@@ -3,7 +3,9 @@ import RPi.GPIO as GPIO
 
 class GPIOController:
     button_pin = 17
-    led_pin = 22
+    led_pin = 27
+    switch_pin = 22
+
     initialized = False
 
     def __init__(self):
@@ -12,8 +14,9 @@ class GPIOController:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(GPIOController.button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(GPIOController.switch_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(GPIOController.led_pin, GPIO.OUT)
-        GPIO.output(GPIOController.led_pin, False)
+        GPIO.output(GPIOController.led_pin, True)
         GPIOController.initialized = True
 
     @staticmethod
@@ -31,4 +34,13 @@ class GPIOController:
 
     @staticmethod
     def set_led(state):
+        if not GPIOController.initialized:
+            raise RuntimeError('GPIO not initialized.')
         GPIO.output(GPIOController.led_pin, state)
+
+    @staticmethod
+    def get_switch():
+        if not GPIOController.initialized:
+            raise RuntimeError('GPIO not initialized.')
+        state = GPIO.input(GPIOController.switch_pin)
+        return state

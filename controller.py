@@ -65,7 +65,11 @@ class Controller:
 
     def check_closest_device_intensity(self):
         while True:
-            if self.closest_device:
+            if GPIOController.get_switch():
+                GPIOController.set_led(True)
+                print('Switch override.')
+                time.sleep(self.checker_delay)
+            elif self.closest_device:
                 intensity = None
                 attempts = 0
                 while intensity is None and attempts < self.connection_attempts:
