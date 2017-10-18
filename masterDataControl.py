@@ -4,6 +4,7 @@ import os
 import json
 import requests
 import subprocess
+import traceback
 
 masterDataControl =  None
 
@@ -17,7 +18,6 @@ class  masterDataControlModule:
 
   def __init__(self):
 
-    self.scriptPath=""    
     self.slavesFile="slaves.data"
     self.slaves={}
     self.getDelay = 60
@@ -25,7 +25,7 @@ class  masterDataControlModule:
 
   def start(self):
 
-    self.dataLoop = Thread(name='Logger',target=self.dataLoop)
+    self.dataLoop = Thread(name='dataLoop',target=self.dataLoop)
     self.dataLoop.start()
 
   def loadSlaves(self):
@@ -74,7 +74,7 @@ class  masterDataControlModule:
         logData=[]
       slavesData[self.slaves[slave]["name"]]=logData     
 
-    self.getInternet()
+    #self.getInternet()
 
     #usando get
     '''
@@ -94,7 +94,7 @@ class  masterDataControlModule:
       print("       {}".format(type(e)))
       print("       {}".format(traceback.format_exc()))
     
-    self.getLan()
+    #self.getLan()
 
   def getInternet(self):
 
