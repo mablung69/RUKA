@@ -81,7 +81,7 @@ class  masterDataControlModule:
         logData=[]
       slavesData[self.slaves[slave]["name"]]=logData     
 
-    #self.getInternet()
+    self.getInternet()
 
     #usando get
     '''
@@ -101,7 +101,7 @@ class  masterDataControlModule:
       logging.debug("       {}".format(type(e)))
       logging.debug("       {}".format(traceback.format_exc()))
     
-    #self.getLan()
+    self.getLan()
 
   def getInternet(self):
 
@@ -110,10 +110,13 @@ class  masterDataControlModule:
     process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
-    bashCommand_eth0_show = "ip link show eth0"
+    bashCommand_eth0_show = "sudo ip link show eth0"
     process = subprocess.Popen(bashCommand_eth0_show.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    output = subprocess.getoutput(bashCommand_eth0_show)
+    #output, error = process.communicate()
 
+    logging.debug("[MDCM].getInternet output: {}".format(output))
+    logging.debug("[MDCM].getInternet output: {}".format(str(output)))
     while not "state DOWN" in output:
       sleep(5)
       process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
