@@ -1,3 +1,4 @@
+import logging
 from time import sleep
 from threading import Thread
 import os
@@ -18,7 +19,7 @@ class  masterDataControlModule:
 
   def __init__(self):
 
-    print("[MDCM] masterDataControlModule construct")
+    logging.debug("[MDCM] masterDataControlModule construct")
     self.slavesFile = "slaves.data"
     self.slaves = {}
     self.getDelay = 60
@@ -27,13 +28,13 @@ class  masterDataControlModule:
 
   def start(self):
 
-    print("[MDCM].start")
+    logging.debug("[MDCM].start")
     self.dataLoop = Thread(name='dataLoop',target=self.dataLoop)
     self.dataLoop.start()
 
   def loadSlaves(self):
 
-    print("[MDCM].loadSlaves")
+    logging.debug("[MDCM].loadSlaves")
     if os.path.isfile(self.slavesFile):
       with open(self.slavesFile) as file:
         lines=file.readlines()
@@ -43,23 +44,24 @@ class  masterDataControlModule:
           ip=line.split(" ")[1]
           self.slaves[name]={"name":name,"ip":ip}
         except IndexError as e:
-          print("Error getLogData get slave: {}".format(e))
-          print("       {}".format(type(e)))
-          print("       {}".format(traceback.format_exc()))
+          logging.debug("Error getLogData get slave: {}".format(e))
+          logging.debug("       {}".format(type(e)))
+          logging.debug("       {}".format(traceback.format_exc()))
     else:
       self.slaves={}
 
   def dataLoop(self):
 
+    logging.debug("[MDCM].dataLoop")
     while True:      
       self.getLogData()
       sleep(self.getDelay)
 
   def getLogData(self):
 
+    logging.debug("[MDCM].getLogData")
     slavesData={}
     for slave in self.slaves:
-
       try:
         resp=requests.get(self.slaves[slave]["ip"])
         if resp.status_code == 200:
@@ -72,9 +74,9 @@ class  masterDataControlModule:
         else:
           logData=[]
       except Exception as e:
-        print("Error getLogData get slave: {}".format(e))
-        print("       {}".format(type(e)))
-        print("       {}".format(traceback.format_exc()))
+        logging.debug("Error getLogData get slave: {}".format(e))
+        logging.debug("       {}".format(type(e)))
+        logging.debug("       {}".format(traceback.format_exc()))
         logData=[]
       slavesData[self.slaves[slave]["name"]]=logData     
 
@@ -94,14 +96,15 @@ class  masterDataControlModule:
       else:
         pass
     except Exception as e:
-      print("Error getLogData post data: {}".format(e))
-      print("       {}".format(type(e)))
-      print("       {}".format(traceback.format_exc()))
+      logging.debug("Error getLogData post data: {}".format(e))
+      logging.debug("       {}".format(type(e)))
+      logging.debug("       {}".format(traceback.format_exc()))
     
     #self.getLan()
 
   def getInternet(self):
 
+    logging.debug("[MDCM].getInternet")
     bashCommand_eth0 = "sudo ip link set enx00e04c534458 down"
     process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
@@ -134,6 +137,7 @@ class  masterDataControlModule:
 
   def getLan(self):    
     
+    logging.debug("[MDCM].getLan")
     bashCommand_wlan0 = "sudo ip link set wlan0 down"
     process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()

@@ -1,7 +1,9 @@
-from masterDataControl import getMasterDataControl
+import logging, sys
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
+from masterDataControl import getMasterDataControl
 masterDataControl = getMasterDataControl()
 
 if __name__ == '__main__':
-    print("Master Node RUKA")
+    logging.debug('Master Node RUKA')
     masterDataControl.start()
