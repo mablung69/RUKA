@@ -117,8 +117,7 @@ class  masterDataControlModule:
       sleep(5)
       process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
       output, error = process.communicate()
-      process = subprocess.Popen(bashCommand_eth0_show.split(), stdout=subprocess.PIPE)
-      output, error = process.communicate()
+      output = subprocess.getoutput(bashCommand_eth0_show)
 
     bashCommand_wlan0 = "sudo ip link set wlan0 up"
     process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
@@ -131,8 +130,7 @@ class  masterDataControlModule:
       sleep(5)
       process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
       output, error = process.communicate()
-      process = subprocess.Popen(bashCommand_wlan0_show.split(), stdout=subprocess.PIPE)
-      output, error = process.communicate()
+      output = subprocess.getoutput(bashCommand_wlan0_show)
 
   def getLan(self):    
     
@@ -148,8 +146,7 @@ class  masterDataControlModule:
       sleep(5)
       process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
       output, error = process.communicate()
-      process = subprocess.Popen(bashCommand_wlan0_show.split(), stdout=subprocess.PIPE)
-      output, error = process.communicate()   
+      output = subprocess.getoutput(bashCommand_wlan0_show)
 
     bashCommand_eth0 = "sudo ip link set eth0 up"
     process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
@@ -162,5 +159,4 @@ class  masterDataControlModule:
       sleep(5)
       process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
       output, error = process.communicate()
-      process = subprocess.Popen(bashCommand_eth0_show.split(), stdout=subprocess.PIPE)
-      output, error = process.communicate()
+      output = subprocess.getoutput(bashCommand_eth0_show)
