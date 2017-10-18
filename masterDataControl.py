@@ -22,8 +22,8 @@ class  masterDataControlModule:
     logging.debug("[MDCM] masterDataControlModule construct")
     self.slavesFile = "slaves.data"
     self.slaves = {}
-    self.getDelay = 60
-    self.server = "http://www.google.cl"
+    self.getDelay = 30#60
+    self.server = "http://192.168.0.7:8000/data"
     self.loadSlaves()    
 
   def start(self):
@@ -40,8 +40,8 @@ class  masterDataControlModule:
         lines=file.readlines()
       for line in lines:
         try:
-          name=line.split(" ")[0]
-          ip=line.split(" ")[1]
+          name=line.split(" ")[0].strip()
+          ip=line.split(" ")[1].strip()
           self.slaves[name]={"name":name,"ip":ip}
         except IndexError as e:
           logging.debug("Error getLogData get slave: {}".format(e))
@@ -63,7 +63,8 @@ class  masterDataControlModule:
     slavesData={}
     for slave in self.slaves:
       try:
-        resp=requests.get(self.slaves[slave]["ip"])
+        resp=requests.get(self.slaves[slave]["ip"]+":8000")
+        logging.debug("resp: {}".format(resp.__dict__))
         if resp.status_code == 200:
           jresp=resp.json()
           status=jresp["status"]
