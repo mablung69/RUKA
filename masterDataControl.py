@@ -22,7 +22,7 @@ class  masterDataControlModule:
     logging.debug("[MDCM] masterDataControlModule construct")
     self.slavesFile = "slaves.data"
     self.slaves = {}
-    self.getDelay = 30#60
+    self.getDelay = 60
     self.server = "http://192.168.0.7:8000/data"
     self.loadSlaves()    
 
@@ -82,7 +82,7 @@ class  masterDataControlModule:
       slavesData[self.slaves[slave]["name"]]=logData     
 
     self.getInternet()
-
+    #sleep(10)
     #usando get
     '''
     payload = slavesData
@@ -119,34 +119,34 @@ class  masterDataControlModule:
       output, error = process.communicate()
       output = subprocess.getoutput(bashCommand_eth0_show)
 
-    bashCommand_wlan0 = "sudo ip link set wlan0 up"
-    process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    #bashCommand_wlan0 = "sudo ip link set wlan0 up"
+    #process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
+    #output, error = process.communicate()
 
-    bashCommand_wlan0_show = "ip link show wlan0"
-    output = subprocess.getoutput(bashCommand_wlan0_show)
+    #bashCommand_wlan0_show = "ip link show wlan0"
+    #output = subprocess.getoutput(bashCommand_wlan0_show)
 
-    while not "state UP" in output:
-      sleep(5)
-      process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
-      output, error = process.communicate()
-      output = subprocess.getoutput(bashCommand_wlan0_show)
+    #while not "state UP" in output:
+    #  sleep(5)
+    #  process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
+    #  output, error = process.communicate()
+    #  output = subprocess.getoutput(bashCommand_wlan0_show)
 
   def getLan(self):    
     
     logging.debug("[MDCM].getLan")
-    bashCommand_wlan0 = "sudo ip link set wlan0 down"
-    process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    #bashCommand_wlan0 = "sudo ip link set wlan0 down"
+    #process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
+    #output, error = process.communicate()
 
-    bashCommand_wlan0_show = "ip link show wlan0"
-    output = subprocess.getoutput(bashCommand_wlan0_show)
+    #bashCommand_wlan0_show = "ip link show wlan0"
+    #output = subprocess.getoutput(bashCommand_wlan0_show)
 
-    while not "state DOWN" in output:
-      sleep(5)
-      process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
-      output, error = process.communicate()
-      output = subprocess.getoutput(bashCommand_wlan0_show)
+    #while not "state DOWN" in output:
+    #  sleep(5)
+    #  process = subprocess.Popen(bashCommand_wlan0.split(), stdout=subprocess.PIPE)
+    #  output, error = process.communicate()
+    #  output = subprocess.getoutput(bashCommand_wlan0_show)
 
     bashCommand_eth0 = "sudo ip link set eth0 up"
     process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
