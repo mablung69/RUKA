@@ -34,9 +34,14 @@ class  masterDataControlModule:
       with open(self.slavesFile) as file:
         lines=file.readlines()
       for line in lines:
-        name=line.split(" ")[0]
-        ip=line.split(" ")[1]
-        self.slaves[name]={"name":name,"ip":ip}
+        try:
+          name=line.split(" ")[0]
+          ip=line.split(" ")[1]
+          self.slaves[name]={"name":name,"ip":ip}
+        except IndexError as e:
+          print("Error getLogData get slave: {}".format(e))
+          print("       {}".format(type(e)))
+          print("       {}".format(traceback.format_exc()))
     else:
       self.slaves={}
 
