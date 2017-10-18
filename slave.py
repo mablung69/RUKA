@@ -1,3 +1,5 @@
+import logging, sys
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 from controller import Controller
 from logger import Logger
 import bluetooth_variables as b_v
@@ -19,6 +21,7 @@ class Views(Resource):
 
   def render_GET(self, request):
 
+    logging.debug("[V].render_GET")
     request.setHeader('Access-Control-Allow-Origin', '*')
     request.setHeader('Access-Control-Allow-Methods', 'POST')
     request.setHeader('Access-Control-Allow-Headers', 'x-prototype-version,x-requested-with')
@@ -32,7 +35,7 @@ class Views(Resource):
     return data
 
 if __name__ == '__main__':
-  print('----- PiTooth -----\n')
+  logging.debug('----- PiTooth -----\n')
   state="develop"
   logger = Logger(logging_delay=l_v.logging_delay,
                   file_name=l_v.file_name,
@@ -42,7 +45,8 @@ if __name__ == '__main__':
                           connection_attempts=b_v.connection_attempts,
                           checker_delay=b_v.checker_delay)
 
-  print "Using Twisted reactor {0}".format(reactor.__class__)
+  logging.debug('Slave Node RUKA')
+  logging.debug("Using Twisted reactor {0}".format(reactor.__class__))
   web       = 8000
   root = Views()
   reactor.listenTCP(web, Site(root))      

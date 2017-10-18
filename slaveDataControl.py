@@ -1,4 +1,4 @@
-
+import logging
 import threading
 
 from eventModule import getBroadcaster
@@ -18,6 +18,7 @@ class  slaveDataControlModule:
 
   def __init__(self):
 
+    logging.debug("[MDCM] slaveDataControlModule construct")
     self.logData = []
     
     broadcasterSingleton.event["log_data"] += self.onLogData
@@ -25,12 +26,14 @@ class  slaveDataControlModule:
 
   def onLogData(self,line):
 
+    logging.debug("[MDCM].onLogData")
     LOCK.acquire()
     self.logData.append(line)
     LOCK.release()    
 
   def onGetLogData(self):
 
+    logging.debug("[MDCM].onGetLogData")
     LOCK.acquire()
     data = list(self.logData)
     self.logData[:] = []
