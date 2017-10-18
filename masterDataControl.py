@@ -105,11 +105,11 @@ class  masterDataControlModule:
   def getInternet(self):
 
     logging.debug("[MDCM].getInternet")
-    bashCommand_eth0 = "sudo ip link set enx00e04c534458 down"
+    bashCommand_eth0 = "sudo ip link set eth0 down"
     process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
-    bashCommand_eth0_show = "ip link show enx00e04c534458"
+    bashCommand_eth0_show = "ip link show eth0"
     process = subprocess.Popen(bashCommand_eth0_show.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
@@ -153,11 +153,11 @@ class  masterDataControlModule:
       process = subprocess.Popen(bashCommand_wlan0_show.split(), stdout=subprocess.PIPE)
       output, error = process.communicate()   
 
-    bashCommand_eth0 = "sudo ip link set enx00e04c534458 up"
+    bashCommand_eth0 = "sudo ip link set eth0 up"
     process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
-    bashCommand_eth0_show = "ip link show enx00e04c534458"
+    bashCommand_eth0_show = "ip link show eth0"
     process = subprocess.Popen(bashCommand_eth0_show.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
