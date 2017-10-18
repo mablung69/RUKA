@@ -35,12 +35,16 @@ class Views(Resource):
     return data
 
 if __name__ == '__main__':
+  logging.debug(sys.argv)
   logging.debug('----- PiTooth -----\n')
-  state="develop"
+  sstate = "develop"
+  if len(sys.argv)>1:
+    sstate = sys.argv[1] if sys.argv[1] in ["develop","production"] else "develop"
+  logging.debug(sstate)
   logger = Logger(logging_delay=l_v.logging_delay,
                   file_name=l_v.file_name,
                   sensor_pin=l_v.sensor_pin,
-                  state=state)
+                  state=sstate)
   controller = Controller(intensity_threshold=b_v.intensity_threshold,
                           connection_attempts=b_v.connection_attempts,
                           checker_delay=b_v.checker_delay)
