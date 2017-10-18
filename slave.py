@@ -5,12 +5,16 @@ from logger import Logger
 import bluetooth_variables as b_v
 import logger_variables as l_v
 
+from twisted.python         import log
 from twisted.internet       import reactor
 from twisted.web.server     import Site
 from twisted.web.resource   import Resource
 
 from eventModule import getBroadcaster
 broadcasterSingleton = getBroadcaster()
+
+from slaveDataControl import getSlaveDataControl
+slaveDataControl = getSlaveDataControl()
 
 class Views(Resource):
 
@@ -22,19 +26,31 @@ class Views(Resource):
   def render_GET(self, request):
 
     logging.debug("[V].render_GET")
-    request.setHeader('Access-Control-Allow-Origin', '*')
-    request.setHeader('Access-Control-Allow-Methods', 'POST')
-    request.setHeader('Access-Control-Allow-Headers', 'x-prototype-version,x-requested-with')
-    request.setHeader('Access-Control-Max-Age', 2520) # 42 hours
-    request.responseHeaders.addRawHeader(b"content-type", b"application/json")
-
     logData = broadcasterSingleton.event["get_log_data"].call()
     data = {"status":"ok", "logData":logData}
     data = str(data).replace("'",'"')
 
-    return data
+
+    request.setHeader('Access-Control-Allow-Origin', '*')
+    request.setHeader('Access-Control-Allow-Methods', 'GET')
+    request.setHeader('Access-Control-Allow-Headers', 'x-prototype-version,x-requested-with')
+    request.setHeader('Access-Control-Max-Age', 2520) # 42 hours
+    request.responseHeaders.addRawHeader(b"content-type", b"application/json")
+
+    logging.debug("[V].render_GET before return")
+
+    #return "<html><body>Prueba</body></html>"
+    #return u'{"status":"ok"}'.encode('utf-8')
+    return data.encode('utf-8')
+
+    #request.setHeader("Content-Type", "text/plain; charset=utf-8")
+    #return u"<html><body>Prueba</body></html>".encode('utf-8')
+
 
 if __name__ == '__main__':
+
+  log.startLogging(sys.stdout)
+
   logging.debug(sys.argv)
   logging.debug('----- PiTooth -----\n')
   sstate = "develop"
