@@ -1,3 +1,4 @@
+#!/bin/bash
 #modificar en masterDataControl.py la url por la que corresponda al server
 #agregar las ips de los nodos slave mas un nombre en el archivo slaves.data
 #./RUKA_config master 00 develop 192.168.0.100 192.168.0.110
