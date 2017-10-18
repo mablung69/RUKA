@@ -18,18 +18,22 @@ class  masterDataControlModule:
 
   def __init__(self):
 
-    self.slavesFile="slaves.data"
-    self.slaves={}
+    print("[MDCM] masterDataControlModule construct")
+    self.slavesFile = "slaves.data"
+    self.slaves = {}
     self.getDelay = 60
+    self.server = "http://www.google.cl"
     self.loadSlaves()    
 
   def start(self):
 
+    print("[MDCM].start")
     self.dataLoop = Thread(name='dataLoop',target=self.dataLoop)
     self.dataLoop.start()
 
   def loadSlaves(self):
 
+    print("[MDCM].loadSlaves")
     if os.path.isfile(self.slavesFile):
       with open(self.slavesFile) as file:
         lines=file.readlines()
