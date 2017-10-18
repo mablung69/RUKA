@@ -1,15 +1,15 @@
 #!/bin/bash
 #modificar en masterDataControl.py la url por la que corresponda al server
 #agregar las ips de los nodos slave mas un nombre en el archivo slaves.data
-#./RUKA_config master 00 develop 192.168.0.100 192.168.0.110
-#./RUKA_config slave 01 develop 192.168.0.101 192.168.0.111
-#./RUKA_config slave 02 develop 192.168.0.102 192.168.0.112
+#sudo ./RUKA_config.sh master 00 develop 192.168.0.100 192.168.0.110
+#sudo ./RUKA_config.sh slave 01 develop 192.168.0.101 192.168.0.111
+#sudo ./RUKA_config.sh slave 02 develop 192.168.0.102 192.168.0.112
 
 #modificar en masterDataControl.py la url por la que corresponda al server
 #agregar las ips de los nodos slave mas un nombre en el archivo slaves.data
-#./RUKA_config master 00 production 192.168.0.100 192.168.0.110
-#./RUKA_config slave 01 production 192.168.0.101 192.168.0.111
-#./RUKA_config slave 02 production 192.168.0.102 192.168.0.112
+#sudo ./RUKA_config.sh master 00 production 192.168.0.100 192.168.0.110
+#sudo ./RUKA_config.sh slave 01 production 192.168.0.101 192.168.0.111
+#sudo ./RUKA_config.sh slave 02 production 192.168.0.102 192.168.0.112
 
 #$1 master, slave
 #$2 00->99
@@ -42,7 +42,7 @@ sudo ifconfig eth0 hw ether 00:e0:4c:53:44:'$2'
 sudo ifconfig eth0 up
 
 cd /home/pi/RUKA/
-python3.5 master.py 2>&1 master.log &'>/etc/rc.local
+python3.5 master.py 2>&1 /home/pi/RUKA/master.log &'>/etc/rc.local
 else
 echo '#!/bin/sh -e
 #
@@ -68,7 +68,7 @@ sudo ifconfig eth0 hw ether 00:e0:4c:53:44:'$2'
 sudo ifconfig eth0 up
 
 cd /home/pi/RUKA/
-python3.5 slave.py '$3' 2>&1 slave.log &'>/etc/rc.local
+python3.5 slave.py '$3' 2>&1 /home/pi/RUKA/slave.log &'>/etc/rc.local
 fi
 
 echo '# A sample configuration for dhcpcd.

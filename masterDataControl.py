@@ -110,13 +110,9 @@ class  masterDataControlModule:
     process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
-    bashCommand_eth0_show = "sudo ip link show eth0"
-    process = subprocess.Popen(bashCommand_eth0_show.split(), stdout=subprocess.PIPE)
+    bashCommand_eth0_show = "ip link show eth0"
     output = subprocess.getoutput(bashCommand_eth0_show)
-    #output, error = process.communicate()
 
-    logging.debug("[MDCM].getInternet output: {}".format(output))
-    logging.debug("[MDCM].getInternet output: {}".format(str(output)))
     while not "state DOWN" in output:
       sleep(5)
       process = subprocess.Popen(bashCommand_eth0.split(), stdout=subprocess.PIPE)
@@ -129,8 +125,7 @@ class  masterDataControlModule:
     output, error = process.communicate()
 
     bashCommand_wlan0_show = "ip link show wlan0"
-    process = subprocess.Popen(bashCommand_wlan0_show.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    output = subprocess.getoutput(bashCommand_wlan0_show)
 
     while not "state UP" in output:
       sleep(5)
@@ -147,8 +142,7 @@ class  masterDataControlModule:
     output, error = process.communicate()
 
     bashCommand_wlan0_show = "ip link show wlan0"
-    process = subprocess.Popen(bashCommand_wlan0_show.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    output = subprocess.getoutput(bashCommand_wlan0_show)
 
     while not "state DOWN" in output:
       sleep(5)
@@ -162,8 +156,7 @@ class  masterDataControlModule:
     output, error = process.communicate()
 
     bashCommand_eth0_show = "ip link show eth0"
-    process = subprocess.Popen(bashCommand_eth0_show.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    output = subprocess.getoutput(bashCommand_eth0_show)
 
     while not "state UP" in output:
       sleep(5)
